@@ -1,2 +1,7 @@
-# ELE495
-TOBB ETÜ - ELE495 Bitirme Projesi
+# ELE495 Bitirme Tasarım Projesi
+
+Grup üyeleri
+- Yaşar Can Kara
+- Numan Avcı
+- Mert Büyükkıdan
+- Burak Ceylan
