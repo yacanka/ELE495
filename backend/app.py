@@ -1,5 +1,6 @@
 from flask import Flask, send_from_directory, Response, jsonify, render_template, request
 from flask_cors import CORS
+from database import Database
 from vision import vision_types
 
 app = Flask(__name__)
@@ -33,6 +34,7 @@ def fruits():
 def favicon():
     return send_from_directory(app.root_path, 'static/favicon.ico', mimetype='image/x-icon')
 
+
 @app.route('/vision_types')
 def get_vision_types():
     return list(vision_types.keys())
@@ -44,6 +46,26 @@ def video_feed():
     print(stream_type)
     stream_model = vision_types[stream_type]
     return Response(stream_model(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.route('/sessions')
+def history():
+    db = Database()
+    return jsonify(db.get_all_session())
+
+
+@app.route('/sessions', methods=['POST'])
+def create_session():
+    db = Database()
+    db.create_session(request.json.get('name'))
+    return jsonify({"message": "Created successfully"})
+
+
+@app.route('/sessions/<string:id>', methods=['DELETE'])
+def delete_session(id):
+    db = Database()
+    db.delete_session(id)
+    return jsonify({"message": "Deleted successfully"})
 
 
 if __name__ == '__main__':
