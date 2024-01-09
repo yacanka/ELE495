@@ -10,9 +10,9 @@ detector = cv2.CascadeClassifier(
     cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # YOLO Variables
-abs_path_labels = "models/yoyo/coco.names"
-abs_path_weights = "models/yoyo/yolov3.weights"
-abs_path_config = "models/yoyo/yolov3.cfg"
+abs_path_labels = "models/yolo/coco.names"
+abs_path_weights = "models/yolo/yolov3.weights"
+abs_path_config = "models/yolo/yolov3.cfg"
 confidence_thres = 0.5
 non_max_thres = 0.3
 
