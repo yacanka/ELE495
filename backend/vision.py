@@ -135,6 +135,5 @@ def yolo_classifier():
 
 vision_types = {
     'normal': normal,
-    'cascade': cascade_classifier,
     'yolo': yolo_classifier
 }
