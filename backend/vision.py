@@ -1,13 +1,10 @@
+import base64
 import os
 import numpy as np
 import time
 import cv2
 
 camera_number = 1
-
-# Cascade Variable
-detector = cv2.CascadeClassifier(
-    cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 # YOLO Variables
 abs_path_labels = "models/yolo/coco.names"
@@ -16,6 +13,17 @@ abs_path_config = "models/yolo/yolov3.cfg"
 confidence_thres = 0.5
 non_max_thres = 0.3
 
+def normal_socket():
+    camera = cv2.VideoCapture(camera_number)
+    while True:
+        success, frame = camera.read()
+
+        if not success:
+            break
+        else:
+            ret, buffer = cv2.imencode('.jpg', frame)
+            frame = buffer.tobytes()
+        yield frame
 
 def normal():
     print("Start")
@@ -31,26 +39,6 @@ def normal():
 
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-
-def cascade_classifier():
-    camera = cv2.VideoCapture(camera_number)
-    while True:
-        success, frame = camera.read()  # read the camera frame
-        if not success:
-            break
-        else:
-            frame = cv2.resize(frame, (320, 180))
-            faces = detector.detectMultiScale(frame, 1.1, 7)
-
-            # Draw the rectangle around each face
-            for (x, y, w, h) in faces:
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
 def yolo_classifier():
