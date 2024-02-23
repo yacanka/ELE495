@@ -1,10 +1,8 @@
 from flask import Flask, send_from_directory, Response, jsonify, render_template, request
-from flask_cors import CORS
 from database import Database
 from vision import vision_types
 
 app = Flask(__name__)
-CORS(app)
 
 
 @app.route('/')

@@ -38,3 +38,4 @@ joint_angles = inverse_kinematics(target_x, target_y, target_z, target_roll, tar
 
 # Result
 print("Joint Angles (degrees):", joint_angles)
+print(type(joint_angles))
