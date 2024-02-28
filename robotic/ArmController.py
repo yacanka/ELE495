@@ -11,36 +11,41 @@ defaultPositions = [90, 150, 20 ,90, 90, 150]
 class ArmController:
     def __init__(self):
         self.initServos()
+        self.isInit = True
         self.servoPos = defaultPositions.copy()
         if self.setPositions(defaultPositions):
             print("initilization completed\n")
             return
         self.servoPos = None
+        self.isInit = False
         return None
-        
-
-#    def __init__(self, servoPos):
-#        self.initServos()
-#        if self.setPosition(servoPos):
-#            return self
-#        return None
 
     def getPositions(self):
-        return self.servoPos.copy()
+        if self.isInit:
+            return self.servoPos.copy()
+        else:
+            return None
     
     def getPosition(self, servoPos):
-        return self.servos[servoPos].angle
+        if self.isInit:
+            return self.servos[servoPos].angle
+        else:
+            return None
     
     def setPositions(self, servoPos : list):
+        if not self.isInit:
+            return
         if len(servoPos) != 6:
             return False
         for i in range(6):
             self.setPosition(i,servoPos[i])
         
-        #self.servoPos = servoPos.copy()
         return True
     
     def setPosition(self, servoPos : int, angle : int):
+        if not self.isInit:
+            return
+
         for i in range(self.servoPos[servoPos], angle, 10):
             self.servos[servoPos].angle = i
             time.sleep(0.03)
@@ -61,9 +66,11 @@ class ArmController:
 
     def initialize(self):
         self.initServos()
+        self.isInit = True
         return self.setPositions(defaultPositions)
 
     def deinit(self):
         self.pca.deinit()
+        self.isInit = False
 
 
