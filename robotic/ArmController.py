@@ -6,7 +6,9 @@ import busio
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 
-defaultPositions = [90, 150, 20 ,90, 90, 150]
+defaultPositions = [90, 150, 20 ,90, 90, 180]
+RESOLUTION = 10
+RESOLUTION_TIME = 0.03
 
 class ArmController:
     def __init__(self):
@@ -46,9 +48,9 @@ class ArmController:
         if not self.isInit:
             return
 
-        for i in range(self.servoPos[servoPos], angle, 10):
+        for i in range(self.servoPos[servoPos], angle, RESOLUTION):
             self.servos[servoPos].angle = i
-            time.sleep(0.03)
+            time.sleep(RESOLUTION_TIME)
         self.servos[servoPos].angle = angle
         self.servoPos[servoPos] = angle
     

@@ -29,3 +29,5 @@ while not exit:
         continue
 
     arm.setPosition(servo_pin, angle)
+
+arm.deinit()
