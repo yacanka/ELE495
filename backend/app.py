@@ -1,9 +1,13 @@
 from flask import Flask, send_from_directory, Response, jsonify, render_template, request
 from database import Database
 from vision import vision_types
+import jsonpickle
+import sys
+from ArmController import ArmController
+
 
 app = Flask(__name__)
-
+controller = ArmController()
 
 @app.route('/')
 def index():
@@ -27,6 +31,16 @@ def fruits():
 
     return jsonify(data)
 
+@app.route('/servos', methods=['POST'])
+def set_angles():
+    dict = request.json.get('angles')
+    print(dict)
+    del dict['base']
+    print(dict)
+    angle_list = list(map(int, list(dict.values())))
+    print(angle_list)
+    controller.setPositions(angle_list)
+    return jsonify({"message": "Set successfully"})
 
 @app.route('/favicon.ico')
 def favicon():
@@ -35,7 +49,7 @@ def favicon():
 
 @app.route('/vision_types')
 def get_vision_types():
-    return list(vision_types.keys())
+    return jsonpickle.encode(list(vision_types.keys()))
 
 
 @app.route('/video_feed', methods=['GET'])

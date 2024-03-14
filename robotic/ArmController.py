@@ -6,9 +6,9 @@ import busio
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 
-defaultPositions = [90, 150, 20 ,90, 90, 180]
+defaultPositions = [90, 90, 90 ,90, 90, 150]
 RESOLUTION = 10
-RESOLUTION_TIME = 0.03
+RESOLUTION_TIME = 0.05
 
 class ArmController:
     def __init__(self):
@@ -64,7 +64,7 @@ class ArmController:
         self.servos.append(servo.Servo(self.pca.channels[2], min_pulse=500, max_pulse=2600))
         self.servos.append(servo.Servo(self.pca.channels[3], min_pulse=500, max_pulse=2600))
         self.servos.append(servo.Servo(self.pca.channels[8], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[9], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(self.pca.channels[10], min_pulse=500, max_pulse=2600))
 
     def initialize(self):
         self.initServos()
