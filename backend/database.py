@@ -48,10 +48,10 @@ class Database:
 
         return list
 
-    def update_session(self, id, status, explanation):
+    def update_session(self, name, status, explanation):
         cursor = self.conn.cursor()
         cursor.execute(
-            'UPDATE session SET status=?, description=? WHERE id=?', (status, explanation, id,))
+            'UPDATE session SET status=?, description=? WHERE name=?', (status, explanation, name,))
         self.conn.commit()
 
     def delete_session(self, id):
