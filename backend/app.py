@@ -3,11 +3,16 @@ from database import Database
 from vision import vision_types
 import jsonpickle
 import sys
-from ArmController import ArmController
+#from ArmController import ArmController
+from time import sleep
+#from Recognition import Recognition
 
 
 app = Flask(__name__)
-controller = ArmController()
+#controller = ArmController()
+#detector = Recognition()
+sessionName = None
+objectDict = {}
 
 @app.route('/')
 def index():
@@ -28,20 +33,18 @@ def fruits():
         {'name': 'quince', 'picked': 3, 'left': 0},
         {'name': 'pomegranate', 'picked': 3, 'left': 0}
     ]
-
-    return jsonify(data)
+    objectList = [{'name': key, 'picked': int(value)} for key, value in objectDict.items()]
+    print(objectList)
+    return jsonify(objectList)
 
 @app.route('/servos', methods=['POST'])
 def set_angles():
     dict = request.json.get('angles')
-    print(dict)
     del dict['base']
-    print(dict)
     angle_list = list(map(int, list(dict.values())))
-    print(angle_list)
-    controller.setPositions(angle_list)
+    #controller.setPositions(angle_list)
     return jsonify({"message": "Set successfully"})
-
+    
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(app.root_path, 'static/favicon.ico', mimetype='image/x-icon')
@@ -68,9 +71,35 @@ def history():
 
 @app.route('/sessions', methods=['POST'])
 def create_session():
+    global sessionName
+    if sessionName != None:
+        return jsonify({"message": "Session already exists"})
     db = Database()
-    db.create_session(request.json.get('name'))
-    return jsonify({"message": "Created successfully"})
+    sessionName = request.json.get('name')
+    db.create_session(sessionName)
+    #objectType = detector.Detect()
+    #objectLabel = detector.getLabels(objectType)
+
+    #if objectLabel in objectDict:
+    #    objectDict[objectLabel] += 1
+    #else:
+    #    objectDict[objectLabel] = 1
+    #print(f"{objectLabel} label value: {objectDict[objectLabel]}")
+
+    angle_list = [90,85,13,140,13,150]
+    #controller.setPositions(angle_list)
+    sleep(1)
+    angle_list[1] = 50 
+    #controller.setPositions(angle_list)
+    sleep(1)
+    angle_list[0] = 50
+    #controller.setPositions(angle_list)
+    sleep(1)
+    angle_list[5] = 110
+    #controller.setPositions(angle_list)
+    #db.update_session(sessionName, "Success", "Found object: " + objectLabel)
+    sessionName = None
+    return jsonify({"message": "Session finished successfully"})
 
 
 @app.route('/sessions/<string:id>', methods=['DELETE'])
