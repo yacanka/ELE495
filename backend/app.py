@@ -3,16 +3,34 @@ from database import Database
 from vision import vision_types
 import jsonpickle
 import sys
-#from ArmController import ArmController
+from ArmController import ArmController
 from time import sleep
-#from Recognition import Recognition
+from Recognition import Recognition
 
+#sys.path.append(r'../vision')
+#from vision.detector import detect_object_color, detect_object_position
 
 app = Flask(__name__)
-#controller = ArmController()
-#detector = Recognition()
+detector = Recognition()
+controller = ArmController()
 sessionName = None
 objectDict = {}
+
+startPoints = [
+    
+    [60,95,30,150,10,110],
+    [90,95,30,150,30,110],
+    [120,95,30,150,50,110]
+]
+# 80, 96, 160, 50, 50, 110
+destPoints = {
+    "banana": [20,80,50,150,5,110],
+    "corn": [150,50,13,140,13,150],
+    "mouse": [90,85,13,140,13,150],
+    "toilet": [90,85,13,140,13,150],
+    "carrot": [90,85,13,140,13,150]
+}
+
 
 @app.route('/')
 def index():
@@ -26,13 +44,6 @@ def about():
 
 @app.route('/fruits')
 def fruits():
-    data = [
-        {'name': 'apple', 'picked': 2, 'left': 1},
-        {'name': 'orange', 'picked': 3, 'left': 0},
-        {'name': 'banana', 'picked': 1, 'left': 2},
-        {'name': 'quince', 'picked': 3, 'left': 0},
-        {'name': 'pomegranate', 'picked': 3, 'left': 0}
-    ]
     objectList = [{'name': key, 'picked': int(value)} for key, value in objectDict.items()]
     print(objectList)
     return jsonify(objectList)
@@ -42,7 +53,7 @@ def set_angles():
     dict = request.json.get('angles')
     del dict['base']
     angle_list = list(map(int, list(dict.values())))
-    #controller.setPositions(angle_list)
+    controller.setPositions(angle_list)
     return jsonify({"message": "Set successfully"})
     
 @app.route('/favicon.ico')
@@ -77,29 +88,35 @@ def create_session():
     db = Database()
     sessionName = request.json.get('name')
     db.create_session(sessionName)
-    #objectType = detector.Detect()
-    #objectLabel = detector.getLabels(objectType)
+    
+    # Model
+    objectType = detector.Detect()
+    objectLabel = detector.getLabels(objectType)
 
-    #if objectLabel in objectDict:
-    #    objectDict[objectLabel] += 1
-    #else:
-    #    objectDict[objectLabel] = 1
-    #print(f"{objectLabel} label value: {objectDict[objectLabel]}")
+    # Vision
+    # detect_object_color()
 
-    angle_list = [90,85,13,140,13,150]
-    #controller.setPositions(angle_list)
+    if objectLabel in objectDict:
+        objectDict[objectLabel] += 1
+    else:
+        objectDict[objectLabel] = 1
+
+    region = detector.getImageLocation()
+    print(f"Region: {region}")
+    angle_list = startPoints[region]
+    controller.setPositions(angle_list)
     sleep(1)
     angle_list[1] = 50 
-    #controller.setPositions(angle_list)
+    controller.setPositions(angle_list)
     sleep(1)
-    angle_list[0] = 50
-    #controller.setPositions(angle_list)
+    angle_list[0] = 180
+    controller.setPositions(angle_list)
     sleep(1)
     angle_list[5] = 110
-    #controller.setPositions(angle_list)
-    #db.update_session(sessionName, "Success", "Found object: " + objectLabel)
+    controller.setPositions(angle_list)
+    db.update_session(sessionName, "Success", "Found object: " + objectLabel)
     sessionName = None
-    return jsonify({"message": "Session finished successfully"})
+    return "Session finished successfully"
 
 
 @app.route('/sessions/<string:id>', methods=['DELETE'])
