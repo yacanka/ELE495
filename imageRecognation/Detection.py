@@ -40,15 +40,15 @@ class Detection:
         cv2.drawContours(coins, cnts, -1, (255, 0, 0), 2)
 
         height, width = coins.shape
-        kesim1 = width // 3
-        kesim2 = (width // 3) * 2
+        cutting_point1 = width // 3
+        cutting_point2 = (width // 3) * 2
 
-        sol_alan = coins[:, :kesim1]
-        orta_alan = coins[:, kesim1:kesim2]
-        sag_alan = coins[:, kesim2:]
+        left_area = coins[:, :cutting_point1]
+        mid_area = coins[:, cutting_point1:cutting_point2]
+        right_area = coins[:, cutting_point2:]
         
-        toplamlar = np.array([np.sum(sol_alan), np.sum(orta_alan), np.sum(sag_alan)])
-        max_sum_index = np.argmax(toplamlar)
+        sums = np.array([np.sum(left_area), np.sum(mid_area), np.sum(right_area)])
+        max_sum_index = np.argmax(sums)
     
         output_path = "/home/jetson/my-detection/loc.jpg"
         cv2.imwrite(output_path,coins)
