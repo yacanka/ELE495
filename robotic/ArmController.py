@@ -6,9 +6,10 @@ import busio
 from adafruit_motor import servo
 from adafruit_pca9685 import PCA9685
 
-defaultPositions = [90, 90, 90 ,90, 90, 150]
-RESOLUTION = 10
-RESOLUTION_TIME = 0.05
+defaultPositions = [30, 40, 0, 130, 0, 110]
+RESOLUTION = 20
+RESOLUTION_TIME = 0.2
+
 
 class ArmController:
     def __init__(self):
@@ -27,24 +28,24 @@ class ArmController:
             return self.servoPos.copy()
         else:
             return None
-    
+
     def getPosition(self, servoPos):
         if self.isInit:
             return self.servos[servoPos].angle
         else:
             return None
-    
-    def setPositions(self, servoPos : list):
+
+    def setPositions(self, servoPos: list):
         if not self.isInit:
             return
         if len(servoPos) != 6:
             return False
         for i in range(6):
-            self.setPosition(i,servoPos[i])
-        
+            self.setPosition(i, servoPos[i])
+
         return True
-    
-    def setPosition(self, servoPos : int, angle : int):
+
+    def setPosition(self, servoPos: int, angle: int):
         if not self.isInit:
             return
 
@@ -53,18 +54,24 @@ class ArmController:
             time.sleep(RESOLUTION_TIME)
         self.servos[servoPos].angle = angle
         self.servoPos[servoPos] = angle
-    
+
     def initServos(self):
         i2c = busio.I2C(SCL, SDA)
         self.pca = PCA9685(i2c)
         self.pca.frequency = 50
         self.servos = []
-        self.servos.append(servo.Servo(self.pca.channels[0], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[1], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[2], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[3], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[8], min_pulse=500, max_pulse=2600))
-        self.servos.append(servo.Servo(self.pca.channels[10], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[0], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[1], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[2], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[3], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[8], min_pulse=500, max_pulse=2600))
+        self.servos.append(servo.Servo(
+            self.pca.channels[10], min_pulse=500, max_pulse=2600))
 
     def initialize(self):
         self.initServos()
@@ -74,5 +81,3 @@ class ArmController:
     def deinit(self):
         self.pca.deinit()
         self.isInit = False
-
-
