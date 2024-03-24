@@ -12,23 +12,91 @@ from Recognition import Recognition
 
 app = Flask(__name__)
 detector = Recognition()
+detector.Detect()
 controller = ArmController()
 sessionName = None
 objectDict = {}
 
+defaultPositions = [30, 40, 0 ,130, 0, 110]
+
 startPoints = [
-    
     [60,95,30,150,10,110],
-    [90,95,30,150,30,110],
+    [95,60,0,130,15,110],
     [120,95,30,150,50,110]
 ]
 # 80, 96, 160, 50, 50, 110
 destPoints = {
-    "banana": [20,80,50,150,5,110],
-    "corn": [150,50,13,140,13,150],
-    "mouse": [90,85,13,140,13,150],
-    "toilet": [90,85,13,140,13,150],
-    "carrot": [90,85,13,140,13,150]
+    "banana": [5,70,45,150,5,110],
+    "corn": [40,100,50,110,15,150],
+    "mouse,": [150,100,50,110,5,110],
+    "toilet paper": [130,90,30,70,5,110],
+    "carrot": [170,80,50,150,5,110],
+    "unknown": [170,80,50,150,5,110]
+}
+
+scenerios = {
+    "toilet paper": [
+        [90,40,30,130,0,110],
+        [90,60,50,160,0,110],
+        [90,60,50,160,0,110],
+        [90,85,40,160,0,110],
+        [90,85,40,160,0,165],
+        [90,50,30,70,0,165],
+        [130,90,30,70,0,165],
+        [130,90,30,70,0,110]
+    ],
+    "corn": [
+        [85,40,30,130,15,110],
+        [85,70,10,130,15,110],
+        [85,70,10,130,15,160],
+        [85,70,70,130,15,160],
+        [40,70,70,130,15,160],
+        [40,70,40,100,15,160],
+        [40,85,40,100,15,160],
+        [40,85,40,100,15,110],
+    ],
+    "sunglasses": [
+        [85,40,30,150,90,110],
+        [85,80,20,150,90,110],
+        [85,80,20,150,90,175],
+        [85,80,70,150,90,175],
+        [85,80,70,90,90,175],
+        [135,80,70,90,90,175],
+        [135,80,50,90,90,175],
+        [135,80,50,140,30,110],
+    ],
+    "water bottle": [
+        [85,40,30,130,15,110],
+        [85,40,10,150,15,110],
+        [85,70,10,150,15,110],
+        [85,70,10,150,15,150],
+        [85,70,50,150,15,150],
+        [160,70,50,150,15,110],
+    ],
+    "bell pepper": [
+        [85,40,30,130,15,110],
+        [85,55,20,125,15,110],
+        [85,70,10,125,15,110],
+        [85,70,10,125,15,155],
+        [85,70,50,150,15,155],
+        [20,70,40,100,15,155],
+        [20,70,50,150,15,110],
+    ],
+    "lemon": [
+        [85,40,30,130,15,110],
+        [85,55,20,125,15,110],
+        [85,70,10,140,15,110],
+        [85,70,10,140,15,155],
+        [85,70,50,140,15,155],
+        [40,85,50,100,15,155],
+        [40,85,50,100,15,110],
+    ],
+    "unknown": [
+        [85,40,30,130,15,110],
+        [85,40,30,130,60,110],
+        [85,40,30,130,15,110],
+        [85,40,30,130,60,110],
+    ]
 }
 
 
@@ -90,8 +158,14 @@ def create_session():
     db.create_session(sessionName)
     
     # Model
+    controller.setDefaultPositions()
     objectType = detector.Detect()
     objectLabel = detector.getLabels(objectType)
+    if objectLabel in scenerios:
+        print(f"{objectLabel} bulundu.")
+    else:
+        print(f"{objectLabel} objesi bilinmiyor.")
+        objectLabel = "unknown"
 
     # Vision
     # detect_object_color()
@@ -103,17 +177,7 @@ def create_session():
 
     region = detector.getImageLocation()
     print(f"Region: {region}")
-    angle_list = startPoints[region]
-    controller.setPositions(angle_list)
-    sleep(1)
-    angle_list[1] = 50 
-    controller.setPositions(angle_list)
-    sleep(1)
-    angle_list[0] = 180
-    controller.setPositions(angle_list)
-    sleep(1)
-    angle_list[5] = 110
-    controller.setPositions(angle_list)
+    controller.move(scenerios[objectLabel])
     db.update_session(sessionName, "Success", "Found object: " + objectLabel)
     sessionName = None
     return "Session finished successfully"
