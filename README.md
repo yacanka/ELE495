@@ -1,4 +1,4 @@
-# TOBB University of Economics and Technology ELE 495 Robot Arm Project
+# TOBB University of Economics and Technology <br> ELE 495 Robot Arm Project
 
 ## Table of Contents
 - [Description](#Description)
