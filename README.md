@@ -1,8 +1,4 @@
-# ELE495 Bitirme Tasarım Projesi
+# TOBB University of Economics and Technology ELE 495 Robot Arm Project
 
-Grup üyeleri
-- Yaşar Can Kara
-- Numan Avcı
-- Mert Büyükkıdan
-- Burak Ceylan
+
 
