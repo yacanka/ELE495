@@ -28,12 +28,11 @@ The purpose of this project is to develop an object classification robot using a
 
 ## Installation and Usage
 1. Clone this repository to your Jetson Nano.
-2. Install required dependencies by running `pip install -r requirements.txt`.
-3. Connect the robotic arm and camera module to the Jetson Nano.
-4. Configure the camera and robotic arm settings as needed.
-5. Open a terminal and navigate to the project directory.
-6. Run the main script using `app.py`.
-7. Access the web interface from a browser to monitor and control the robot.
+2. Connect the robotic arm and camera module to the Jetson Nano.
+3. Configure the camera and robotic arm settings as needed.
+4. Open a terminal and navigate to the project directory.
+5. Run the main script using `app.py`.
+6. Access the web interface from a browser to monitor and control the robot.
 
 
 ## Web Interface 
