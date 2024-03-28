@@ -1,5 +1,15 @@
 # TOBB University of Economics and Technology ELE 495 Robot Arm Project
 
+## Table of Contents
+- [Description](#Description)
+- [Features](#Features)
+- [Requirements](#Requirements)
+- [Installation and Usage](#Installation and Usage)
+- [Web Interface ](#Web Interface )
+- [Connections](#Connections)
+- [Acknowledgments](#Acknowledgments)
+- [Contributors](#Contributors)
+
 ## Description
 The purpose of this project is to develop an object classification robot using a robotic arm and Nvidia Jetson Nano kit. This robot will utilize image processing and artificial intelligence technologies to identify and classify a specific number and variety of objects, then place them into respective bins, and display the entire process on a web interface.
 
