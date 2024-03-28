@@ -50,7 +50,7 @@ The purpose of this project is to develop an object classification robot using a
 - Thanks to the open-source community for their contributions to image processing.
 
 ## Contributors
-Abdullah Mert Büyükkıdan
-Burak Ceylan
-Numan Avcı
-Yaşar Can Kara
+- Abdullah Mert Büyükkıdan
+- Burak Ceylan
+- Numan Avcı
+- Yaşar Can Kara
