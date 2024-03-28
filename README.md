@@ -12,24 +12,21 @@ The purpose of this project is to develop an object classification robot using a
 ## Requirements
 - Nvidia Jetson Nano Developer Kit
 - 6 axis robot arm 
-- Mipi csi-2 camera module
-- Mg996r servo motors
+- MIPI CSI-2 camera module
+- MG996R servo motors
+- WIFI module
+- PCA9685 16 Channel I2C PWM/Servo Driver Board
+- 12 V power supply
 
-## Installation
+## Installation and Usage
 1. Clone this repository to your Jetson Nano.
 2. Install required dependencies by running `pip install -r requirements.txt`.
 3. Connect the robotic arm and camera module to the Jetson Nano.
 4. Configure the camera and robotic arm settings as needed.
-5. Run the main script using `python main.py`.
-6. Access the web interface from a browser to monitor and control the robot.
+5. Open a terminal and navigate to the project directory.
+6. Run the main script using `app.py`.
+7. Access the web interface from a browser to monitor and control the robot.
 
-
-## Usage
-1. Power on the Jetson Nano and ensure all connections are properly set up.
-2. Open a terminal and navigate to the project directory.
-3. Run the main script using `python main.py`.
-4. Access the web interface from a browser by entering the Jetson Nano's IP address.
-5. Follow the on-screen instructions to initiate object classification and sorting.
   
 ## Acknowledgments
 - Special thanks to Nvidia for providing the Jetson Nano Developer Kit.
