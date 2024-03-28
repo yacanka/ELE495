@@ -20,7 +20,7 @@ The purpose of this project is to develop an object classification robot using a
 - MG996R servo motors
 - WIFI module
 - PCA9685 16 Channel I2C PWM/Servo Driver Board
-- 12 V power supply
+- Power supply
 
 
 ![Requirements](sources/proje1.png)
