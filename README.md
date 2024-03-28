@@ -21,6 +21,8 @@ The purpose of this project is to develop an object classification robot using a
 - WIFI module
 - PCA9685 16 Channel I2C PWM/Servo Driver Board
 - 12 V power supply
+![Requirements](sources/proje1.jpg)
+
 
 ## Installation and Usage
 1. Clone this repository to your Jetson Nano.
@@ -31,8 +33,19 @@ The purpose of this project is to develop an object classification robot using a
 6. Run the main script using `app.py`.
 7. Access the web interface from a browser to monitor and control the robot.
 
-  
+
+## Web Interface 
+![Web Interface ](sources/proje2.jpg)
+
+## Connections
+![Web Interface ](sources/proje4.jpg)
+
 ## Acknowledgments
 - Special thanks to Nvidia for providing the Jetson Nano Developer Kit.
-- Thanks to the open-source community for their contributions to image processing and robotics.
+- Thanks to the open-source community for their contributions to image processing.
 
+## Contributors
+Abdullah Mert Büyükkıdan
+Burak Ceylan
+Numan Avcı
+Yaşar Can Kara
