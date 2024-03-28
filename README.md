@@ -3,6 +3,10 @@
 ## Description
 The purpose of this project is to develop an object classification robot using a robotic arm and Nvidia Jetson Nano kit. This robot will utilize image processing and artificial intelligence technologies to identify and classify a specific number and variety of objects, then place them into respective bins, and display the entire process on a web interface.
 
+
+![Robot Arm Project](sources/proje5.jpg)
+
+
 ## Features
 - Object detection and classification using image processing algorithms.
 - Integration of a robotic arm to handle and sort objects.
