@@ -21,7 +21,7 @@ The purpose of this project is to develop an object classification robot using a
 - WIFI module
 - PCA9685 16 Channel I2C PWM/Servo Driver Board
 - 12 V power supply
-![Requirements](sources/proje1.jpg)
+![Requirements](sources/proje1.png)
 
 
 ## Installation and Usage
@@ -35,10 +35,10 @@ The purpose of this project is to develop an object classification robot using a
 
 
 ## Web Interface 
-![Web Interface ](sources/proje2.jpg)
+![Web Interface](sources/proje2.png)
 
 ## Connections
-![Web Interface ](sources/proje4.jpg)
+![Web Interface](sources/proje4.png)
 
 ## Acknowledgments
 - Special thanks to Nvidia for providing the Jetson Nano Developer Kit.
